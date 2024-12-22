@@ -1,0 +1,73 @@
+# Configure LAYER 3 Switching using MLS
+
+Steps:
+1- enter MLS
+2- enable
+3- conf terminal
+4- interface g0/2
+5- no switchport
+6- ip address 209.165.200.225 255.255.255.252
+7- ipv6 address 2001:db8:acad:a::1/64
+8- exit
+
+# Configure inter-VLAN Routing
+
+Steps:
+1- enter MLS (make sure its look like this "MLS(config)#" if not --> enable --> conf t then go to step 2)
+2- vlan 10
+3- name Staff
+4- exit
+5- vlan 20
+6- name Student
+7- exit
+8- vlan 30
+9- name Faculty
+10- exit
+
+# Configure SVI on MLS
+
+Steps: (Every IP used in Steps you will find it in the task table)
+1- enter MLS (make sure its look like this "MLS(config)#" if not --> enable --> conf t then go to step 2)
+2- interface vlan 10
+3- ip address 192.168.10.254 255.255.255.0
+4- ipv6 address 2001:db8:acad:10::1/64
+5- exit
+6- interface vlan 20
+7- ip address 192.168.20.254 255.255.255.0
+8- ipv6 address 2001:db8:acad:20::1/64
+9- exit
+10- interface vlan 30
+11- ip address 192.168.30.254 255.255.255.0
+12- ipv6 address 2001:db8:acad:30::1/64
+13- exit
+14- interface vlan 99
+15- ip address 192.168.99.254 255.255.255.0
+16- exit
+
+# Configure Trunking on MLS
+
+Steps:
+1- enter MLS (make sure its look like this "MLS(config)#" if not --> enable --> conf t then go to step 2)
+2- interface g0/1
+3- switchport mode trunk
+4- switchport trunk encapsulation dot1q
+5- switchport trunk native vlan 99
+6- exit
+
+# Configure Trunking on S1
+
+Steps:
+1- enter S1 (make sure its look like this "S1(config)#" if not --> enable --> conf t then go to step 2)
+2- interface g0/1
+3- switchport mode trunk
+4- switchport trunk native vlan 99
+5- exit
+
+# Enable routing
+
+Steps:
+1- enter MLS (make sure its look like this "MLS(config)#" if not --> enable --> conf t then go to step 2)
+2- ip routing
+3- ipv6 unicast-routing
+
+# The End
