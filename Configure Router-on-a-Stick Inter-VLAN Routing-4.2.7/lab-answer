@@ -1,0 +1,49 @@
+# First, We need to create Two VLAN for Switch1
+
+Steps:
+1- enter S1
+2- enable 
+3- conf terminal
+4- vlan 10
+5- vlan 30 
+6- exit
+
+# Second, We need to configure interfaces f0/6 and f0/11 as access ports and assign VLANs
+
+Steps:
+1- enter S1 (make sure its look like this "S1(config)#" if not --> enable --> conf t then go step 2)
+2- interface f0/6
+3- switchport mode access
+4- switchport access vlan 30
+5- exit
+6- interface f0/11
+7- switchport mode access
+8- switchport access vlan 10
+9- exit
+
+# Third, We need to configure router subinterfaces G0/0.(10, 30) to be logically divided
+
+Steps:
+1- enter R1
+2- enable
+3- conf terminal
+4- interface g0/0.10
+5- encapsulation dot1Q 10
+6- ip address 172.17.10.1 255.255.255.0
+7- exit
+8- interface g0/0.30
+9- encapsulation dot1Q 30
+10- ip address 172.17.30.1 255.255.255.0
+11- exit
+12- interface g0/0
+13- no shutdown
+14- exit
+
+# Finally, We need to configure Switch interface g0/1 to accept traffic
+
+Steps:
+1- enter S1 (make sure its look like this "S1(config)#", if not --> enable --> conf t then go step 2)
+2- interface g0/1
+3- switchport mode trunk
+
+# The End
